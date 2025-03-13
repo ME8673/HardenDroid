@@ -225,6 +225,7 @@ public class GlobalRestrictionsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("PrivateApi")
     private void initDevicePolicyManager() throws Exception {
         Context dhizukuContext = getApplicationContext().createPackageContext(
                 Dhizuku.getOwnerPackageName(),

@@ -66,22 +66,39 @@ public class GlobalSettingsActivity extends AppCompatActivity {
         dpm = dhizukuContext.getSystemService(DevicePolicyManager.class);
         admin = Dhizuku.getOwnerComponent();
 
-        // Use reflection to access binderWrapper
+        // Use reflection but with a approach compatible w/ API 34+
         Class<?> dpmClass = dpm.getClass();
-        Field mServiceField = dpmClass.getDeclaredField("mService");
-        mServiceField.setAccessible(true);
-        Object mService = mServiceField.get(dpm);
 
-        // Wrap the binder
-        Method asBinder = mService.getClass().getMethod("asBinder");
-        IBinder binder = (IBinder) asBinder.invoke(mService);
-        IBinder wrappedBinder = Dhizuku.binderWrapper(binder);
+        // Get the IDevicePolicyManager interface through reflection
+        Class<?> iDevicePolicyManagerClass = Class.forName("android.app.admin.IDevicePolicyManager");
 
-        // Create wrapped service
-        Class<?> stubClass = Class.forName("android.app.admin.IDevicePolicyManager$Stub");
-        Method asInterface = stubClass.getMethod("asInterface", IBinder.class);
-        Object wrappedService = asInterface.invoke(null, wrappedBinder);
-        mServiceField.set(dpm, wrappedService);
+        // Find the internal field that holds the service, but avoid using "mService" directly cause its gonna get blocked in API 34 :|
+        // Thanks Google for making my life harder! (.-.)
+        Field serviceField = null;
+        for (Field field : dpmClass.getDeclaredFields()) {
+            if (iDevicePolicyManagerClass.isAssignableFrom(field.getType())) {
+                serviceField = field;
+                break;
+            }
+        }
+
+        if (serviceField != null) {
+            serviceField.setAccessible(true);
+            Object service = serviceField.get(dpm);
+
+            // Wrap the binder
+            Method asBinder = service.getClass().getMethod("asBinder");
+            IBinder binder = (IBinder) asBinder.invoke(service);
+            IBinder wrappedBinder = Dhizuku.binderWrapper(binder);
+
+            // Create wrapped service
+            Class<?> stubClass = Class.forName("android.app.admin.IDevicePolicyManager$Stub");
+            Method asInterface = stubClass.getMethod("asInterface", IBinder.class);
+            Object wrappedService = asInterface.invoke(null, wrappedBinder);
+
+            // Set the wrapped service back
+            serviceField.set(dpm, wrappedService);
+        }
     }
 
     @Override
