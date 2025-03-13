@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HardenDroid</string>
+    <string name="manage_users">Manage Users</string>
+    <string name="refresh_status">Refresh Status</string>
+    <string name="checking_shizuku">Checking Shizuku status…</string>
+    <string name="shizuku_not_running">Shizuku is not running. Please start Shizuku first.</string>
+    <string name="shizuku_permission_denied">Shizuku permission denied. Please grant permission.</string>
+    <string name="dhizuku_not_available">Dhizuku permission denied. Please grant permissions to this app.</string>
+    <string name="both_permissions_denied">Both Shizuku and Dhizuku permission denied. Please grant permissions to this app.</string>
+    <string name="both_services_not_available">Both Shizuku and Dhizuku permission denied. Please grant permissions to this app.</string>
+    <string name="dhizuku_permission_denied">Dhizuku permission denied. Please grant permission.</string>
+    <string name="shizuku_permission_granted">Shizuku permission granted.</string>
+    <string name="dhizuku_permission_granted">Dhizuku permission granted.</string>
+    <string name="user_management">User Management</string>
+    <string name="add_user">Add User</string>
+    <string name="switch_text">Switch to</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="user_name">User Name</string>
+    <string name="add_new_user">Add New User</string>
+    <string name="rename_user">Rename User</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="user_created">User created successfully</string>
+    <string name="user_renamed">User renamed successfully</string>
+    <string name="user_deleted">User deleted</string>
+    <string name="switching_user">Switching to user…</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="error_request_permission">Error requesting Shizuku permission</string>
+    <string name="both_permissions_granted">Both Shizuku and Dhizuku permission granted. Proceed.</string>
+</resources>
